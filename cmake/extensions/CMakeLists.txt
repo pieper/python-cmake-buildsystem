@@ -159,23 +159,29 @@ else(WIN32)
     set(_libffi_system_extra_src)
     if(APPLE)
         # TODO - Jc:02/20/2013
-        #add_python_extension(_ctypes
-        #    SOURCES _ctypes/_ctypes.c
-        #            _ctypes/callbacks.c
-        #            _ctypes/callproc.c
-        #            _ctypes/cfield.c
-        #            _ctypes/libffi_osx/src/closures.c
-        #            _ctypes/libffi_osx/src/dlmalloc.c
-        #            _ctypes/libffi_osx/${_libffi_system_dir}/ffi.c
-        #            _ctypes/libffi_osx/${_libffi_system_dir}/ffi64.c
-        #            _ctypes/libffi_osx/src/prep_cif.c
-        #            _ctypes/stgdict.c
-        #            _ctypes/libffi_osx/${_libffi_system_dir}/sysv.S
-        #            _ctypes/libffi_osx/${_libffi_system_dir}/darwin64.S
-        #    INCLUDEDIRS ${SRC_DIR}/Modules/_ctypes/libffi/src/${_libffi_system_dir}
-        #                ${SRC_DIR}/Modules/_ctypes/libffi/include
-        #)
+        # Only support x86 - SP 2015-06-03
+        add_python_extension(_ctypes
+            SOURCES _ctypes/_ctypes.c
+                    _ctypes/callbacks.c
+                    _ctypes/callproc.c
+                    _ctypes/cfield.c
+                    _ctypes/stgdict.c
+                    _ctypes/malloc_closure.c
+                    _ctypes/darwin/dlfcn_simple.c
+                    #_ctypes/libffi/src/dlmalloc.c
+                    #_ctypes/libffi/src/dlmalloc.c
+                    _ctypes/libffi_osx/ffi.c
+                    #_ctypes/libffi_osx/types.c
+                    _ctypes/libffi_osx/x86/darwin64.S
+                    _ctypes/libffi_osx/x86/x86-darwin.S
+                    _ctypes/libffi_osx/x86/x86-ffi64.c
+                    _ctypes/libffi_osx/x86/x86-ffi_darwin.c  
+            INCLUDEDIRS ${SRC_DIR}/Modules/_ctypes/libffi_osx/include
+                        ${SRC_DIR}/Modules/_ctypes/darwin
+            DEFINITIONS MACOSX
+        )
     else(APPLE)
+        # Linux
         if("${CMAKE_SYSTEM_PROCESSOR}" STREQUAL "x86_64")
           set(_libffi_system_extra_src
                 _ctypes/libffi/src/${_libffi_system_dir}/ffi64.c

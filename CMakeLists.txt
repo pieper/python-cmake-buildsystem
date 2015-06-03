@@ -233,7 +233,7 @@ if(UNIX)
     # Makefile
     set(MAKEFILE_LDSHARED_FLAGS "-shared")
     if(APPLE)
-        set(MAKEFILE_LDSHARED_FLAGS "-dynamiclib -headerpad_max_install_names -undefined dynamic_lookup")
+        set(MAKEFILE_LDSHARED_FLAGS "-dynamiclib -headerpad_max_install_names -undefined dynamic_lookup -Wl,-flat_namespace")
     endif(APPLE)
     configure_file(cmake/makefile-variables.in
                    ${BIN_BUILD_DIR}/Makefile @ONLY)

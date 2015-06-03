@@ -134,7 +134,7 @@ function(add_python_extension name)
         
         if(APPLE)
             set_target_properties(${target_name} PROPERTIES
-                LINK_FLAGS -Wl,-undefined,dynamic_lookup
+                LINK_FLAGS "-Wl,-undefined,dynamic_lookup -Wl,-flat_namespace"
                 SUFFIX .so
             )
         endif(APPLE)
